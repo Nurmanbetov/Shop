@@ -1,7 +1,9 @@
-from django.http.response import HttpResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render 
+from product.models import Good
 
 
 
 def goods(request):
-    return HttpResponse("List of Goods")
+    context = {} 
+    context["goods"] = Good.objects.filter(available=True)
+    return render(request, "good/goods.html", context)
