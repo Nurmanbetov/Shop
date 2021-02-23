@@ -2,10 +2,32 @@
 {% block content %}
 
     <h1>All products are here!</h1>
-    <ol>
+   
+
+
+    <div id="portfolio" class="container-fluid text-center bg-grey">
+        <div class="row text-center slideanim">
         {% for good in goods %}
-        <a href="{% url 'good' good.id %}"><li>{{ good }} - {{ good.category }}</li></a>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    {% if good.image %}
+                    <a href="{% url 'good' good.id %}">
+                        <img src="{{ good.image.url }}" width="200px">
+                    </a>
+                    {% endif %}
+                    
+                    <p>
+                        <strong>
+                            <a href="{% url 'good' good.id %}">
+                                {{ good.name }}
+                            </a>
+                        </strong>
+                    </p>
+                    
+                    <p>{{ good.price|floatformat:"0" }}$</p>
+                </div>
+            </div>
         {% endfor %}
-        
-    </ol>
+        </div>
+    </div>
 {% endblock %}
