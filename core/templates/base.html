@@ -29,27 +29,26 @@
     </ul>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'create-good' %}">Create Good</a>
+        <a class="nav-link" href="{% url 'create-good' %}">Create Product</a>
       </li>
     </ul>
   </nav>
   <div class="row">
     {% block page %}
     <div class="col-lg-3 col-md-2">
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-      Product Categories<br>
-
+      <div class="list-group"></ul>
+        {% for category in categories %}
+          <a 
+            href="{% url 'category' category.id %}" 
+            class="list-group-item
+            {% if category.id == category_pk %}
+              list-group-item-info
+            {% endif %}
+            ">
+            {{ category.name }}
+        </a>
+        {% endfor %}
+      </div>
     </div>
     <div class="col-lg-9 col-md-10 container-fluid"><br>  
       {% block content %}

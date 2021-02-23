@@ -30,3 +30,12 @@ def create_good(request):
         "good/form.html",
         context
     )
+
+def category(request, pk):
+    context = {}
+    context["goods"] = Good.objects.filter(
+        category__id=pk,
+        available=True,
+    )
+    context["category_pk"] = pk
+    return render(request, "good/goods.html", context)
