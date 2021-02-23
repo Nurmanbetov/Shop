@@ -1,7 +1,10 @@
 from django import forms
 from django.shortcuts import render, redirect   
-from product.models import Good
-from product.forms import GoodForm
+from product.models import *
+from product.forms import *
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.db.models import Q
 
 
 
@@ -33,9 +36,19 @@ def create_good(request):
 
 def category(request, pk):
     context = {}
+    category = Category.objects.get(id=pk)
     context["goods"] = Good.objects.filter(
-        category__id=pk,
+        Q(category__id=pk) |
+        Q(category__in=category.child_category.all()),
         available=True,
     )
     context["category_pk"] = pk
     return render(request, "good/goods.html", context)
+
+
+
+class CategoryCreate(CreateView):
+    model = Category
+    fields = ["name"]
+    template_name = "good/create_category.html"
+    success_url = reverse_lazy("goods")

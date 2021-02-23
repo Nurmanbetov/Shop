@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+    <h3>Add category</h3>
+    <form method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-lg btn-info" >Create</button>
+    </form>
+
+{% endblock %}

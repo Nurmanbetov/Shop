@@ -37,6 +37,13 @@ class Category(models.Model):
     name = models.CharField(
         max_length=255
     )
+    parent_category = models.ForeignKey(
+        to="Category",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="child_category"
+    )
 
     def __str__(self):
         return self.name

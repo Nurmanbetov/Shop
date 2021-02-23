@@ -1,5 +1,6 @@
 from django import  forms
-from product.models import Good
+from django.forms import fields
+from product.models import *
 
 
 class GoodForm(forms.ModelForm):
@@ -12,3 +13,10 @@ class GoodForm(forms.ModelForm):
             "description",
             "price"
         ]
+
+
+
+class CategoryCreateForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["name"]

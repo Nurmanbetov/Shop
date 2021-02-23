@@ -9,7 +9,10 @@
 </div>
         {% endif %}
 <div class="col-lg-8">
-    <h3>{{ good }}</h3>
+    <h3>
+        <a href="{% url 'category' good.category.parent_category.id %}">{{ good.category.parent_category }}</a> -> 
+        <a href="{% url 'category' good.category.id %}">{{ good.category }}</a> -> 
+        {{ good }}</h3>
     <h3>{{ good.price }}$</h3>
     <div>{{ good.description|linebreaks }}</div>
     {% if good.available %}
