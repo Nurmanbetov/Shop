@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    {% if good.image %}
+    <div class="col-lg-4">
+            <img src="{{ good.image.url }}" width="300p">
+    </div>
+</div>
+        {% endif %}
+<div class="col-lg-8">
+    <h3>{{ good }}</h3>
+    <h3>{{ good.price }}$</h3>
+    <div>{{ good.description|linebreaks }}</div>
+    {% if good.available %}
+        <h5 class="alert alert-success">Available</h5>
+    {% else %}
+        <h5 class="alert alert-danger">Not available</h5>
+
+  </div>
+    {% endif %}
+{% endblock %}
