@@ -1,25 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    {% if good.image %}
-    <div class="col-lg-4">
-            <img src="{{ good.image.url }}" width="300p">
-    </div>
-</div>
+    <div class="row">
+        {% if good.image %}
+            <div class="col-lg-4">
+                <img src="{{ good.image.url }}" width="300p">
+            </div>
         {% endif %}
-<div class="col-lg-8">
+    </div>
+<div class="col-lg-8 col-md-6 col-sm-12">
     <h3>
-        <a href="{% url 'category' good.category.parent_category.id %}">{{ good.category.parent_category }}</a> -> 
-        <a href="{% url 'category' good.category.id %}">{{ good.category }}</a> -> 
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for category in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'category' category.id %}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li class="breadcrumb-item active" aria-current="page">{{ good }}</li>
+            </ol>
+        </nav>           
+
+
+
+          
         {{ good }}</h3>
     <h3>{{ good.price }}$</h3>
     <div>{{ good.description|linebreaks }}</div>
-    {% if good.available %}
-        <h5 class="alert alert-success">Available</h5>
-    {% else %}
+        {% if good.available %}
+            <h5 class="alert alert-success">Available</h5>
+        {% else %}
         <h5 class="alert alert-danger">Not available</h5>
 
-  </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

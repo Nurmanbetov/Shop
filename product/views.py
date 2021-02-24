@@ -1,8 +1,10 @@
+from typing import KeysView
 from django import forms
+from django.forms.utils import from_current_timezone
 from django.shortcuts import render, redirect   
 from product.models import *
 from product.forms import *
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from django.urls import reverse_lazy
 from django.db.models import Q
 
@@ -13,10 +15,30 @@ def goods(request):
     context["goods"] = Good.objects.filter(available=True)
     return render(request, "good/goods.html", context)
 
-def good(request, id):
-    context = {}
-    context["good"] = Good.objects.get(id=id)
-    return render(request, "good/good.html", context)
+#def good(request, id):
+#    context = {}
+#    context["good"] = Good.objects.get(id=id)
+#    return render(request, "good/good.html", context)
+
+
+
+class GoodDetailView(DetailView):
+    template_name = "good/good.html"
+    model = Good
+
+    def get_context_data(self, **kwargs):
+        context = super(GoodDetailView, self).get_context_data( **kwargs)
+        good = Good.objects.get(id=self.kwargs["pk"])
+        breadcrumbs = []
+        category = good.category 
+        while True:
+            if category:
+                breadcrumbs = [category] + breadcrumbs
+                category = category.parent_category
+            else:
+                break
+        context["breadcrumbs"] = breadcrumbs
+        return context
 
 
 
