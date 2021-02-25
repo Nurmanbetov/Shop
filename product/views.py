@@ -7,9 +7,10 @@ from product.forms import *
 from django.views.generic import CreateView, DetailView
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
-
+@login_required(login_url="login")
 def goods(request):
     context = {} 
     context["goods"] = Good.objects.filter(available=True)
@@ -41,7 +42,7 @@ class GoodDetailView(DetailView):
         return context
 
 
-
+@login_required(login_url="login")
 def create_good(request):
     if request.method == "POST":
         form = GoodForm(request.POST)
